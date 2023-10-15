@@ -1,14 +1,3 @@
-function main() {
-    newDate = localStorage.getItem("newDate");
-    if (newDate=="true") {
-        showTable();
-        localStorage.setItem("arrAllReactions", JSON.stringify(arrAllReactions));
-        if (arrHistory.length>0) {
-            fillTable();
-        }
-    }
-};
-
 function storeReactions(userExist) {
     arrAllReactions = JSON.parse(localStorage.getItem("arrAllReactions"));
     if (arrAllReactions==null) {
@@ -27,11 +16,9 @@ function storeReactions(userExist) {
                 arrReaction=[];
     
     }
-   // alert(arrAllReactions)
 };
 
 function hideTable() {
-alert("hide Table")
     document.getElementById("inputTable").style.display = "none";
     document.getElementById("hintChoiceDiv").style.display = "none";
     document.getElementById("btnListDiv").style.display = "none";
@@ -40,7 +27,6 @@ alert("hide Table")
 };
 
 function showTable () {
-alert("show table")
     document.getElementById("inputTable").style.display = "";
     document.getElementById("hintChoiceDiv").style.display = "";
     document.getElementById("btnListDiv").style.display = ""; document.getElementById("btnInputDiv").style.display = "none";
@@ -54,8 +40,6 @@ function activateBtn() {
 };
 
 function fillTable() {
-alert("fillTable")
-//alert(arrHistory)
     for (i=2;i<arrHistory.length;i=i+2) {
         dateShow=arrHistory[i];
         tempDay=new Date(dateShow)
