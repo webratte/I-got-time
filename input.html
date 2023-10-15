@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>I got time</title>
+            <meta charset='utf-8'/>
+            <meta name='viewport' content='width=device-width'/>
+            <link href='./main.css' rel="stylesheet">
+            <script src='./js/main.js'></script>
+            <script src='./js/languages.js'></script>
+            <script src='./js/updates.js'></script>
+            <script src='./js/input.js'></script>
+            <script src='./webxdc.js'></script>
+            <style type='text/css'></style>
+    </head>
+    <font size='6'>I got time</font>
+<body>
+<form>
+    <div class="center">
+        <output id="hintInput"></output>
+    </div>
+    <div class="error" id="errorMsgDiv"style="display: none";>
+        <output id="errorMsg"></output>
+    </div>
+    <table class="table">
+        <tr>
+            <td>
+                <br>
+                <output id="labelTitle" class="input"></output>
+                <br>
+                <textarea id="inputTitle" class="input" type="text" rows="3" maxlength="100" onChange=revertRedBorder(this.id)></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <output id="labelDate" style="float: left; margin-left: 5%; margin-top: 5px;"></output>
+                <output id="labelTime" style="float: right; margin-right: 5%; margin-top: 5px;"></output>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="inputDate1" class="inputTime" type="date" onChange=revertRedBorder(this.id)> 
+                <input id="inputTime1" class="inputTime" type="time" onChange=revertRedBorder(this.id)>
+            </td>
+        </tr>    
+            <td>
+                <input id="inputDate2" class="inputTime" type="date" onChange=revertRedBorder(this.id)> 
+                <input id="inputTime2" class="inputTime" type="time" onChange=revertRedBorder(this.id)>
+            </td>
+        <tr>   
+            <td>
+                <input id="inputDate3" class="inputTime" type="date" onChange=revertRedBorder(this.id)> 
+                <input id="inputTime3" class="inputTime" type="time" onChange=revertRedBorder(this.id)>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" id="btnSend" class="button" style="float: left; margin: 20px;" onclick="save();">
+                <input type="button" id="btnCancel" class="button" style="float: right; margin: 20px;" onclick=location.assign("./index.html");>
+            </td>
+        </tr>
+  </table>
+ </form>
+<script>
+    setLngInput();
+</script>
+</body>
+</html>

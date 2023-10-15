@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>I got time</title>
+            <meta charset='utf-8'/>
+            <meta name='viewport' content='width=device-width'/>
+            <link href='./main.css' rel="stylesheet">
+            <script src='./js/main.js'></script>
+            <script src='./js/languages.js'></script>
+            <script src='./js/updates.js'></script>
+            <script src='./js/input.js'></script>
+            <script src='./webxdc.js'></script>
+            <style type='text/css'></style>
+    </head>
+    <font size='6'>I got time</font>
+    <font size='1'> by <a href="mailto:webratte+webxdc@mailbox.org">Webratte </a> Version 0.0.1 beta1
+    </font>
+<body>
+<form>
+    <br>
+    <div class="center" id="hintStartDiv">
+        <output id="hintStart"></output>
+    </div>
+    <div class="center" id="btnInputDiv">
+        <input type="button" id="btnInput" class="button" onclick="location.assign('./input.html');">
+    </div>
+    <div class="center" id="btnListDiv">
+        <input type="button" id="btnList" class="button" onclick="location.assign('./list.html');">
+    </div>
+    <div class="center" id="hintChoiceDiv">
+        <output id="hintChoice"></output>
+    </div>
+    <div class="title" id="titleChoiceDiv">
+        <output id="titleChoice"></output>
+    </div>
+    <table class="table" id="inputTable">
+        <tr>
+            <td class="cell" id="inputCell1" onclick=toggle(this.id);>------</td>
+            <td class="cell" id="inputCell2" onclick=toggle(this.id)>------</td>
+            <td class="cell" id="inputCell3" onclick=toggle(this.id)>------</td>
+        </tr>
+        <tr>
+            <td class="cell" id="inptToggl1" onclick=toggle(this.id)>Click</td>
+            <td class="cell" id="inptToggl2" onclick=toggle(this.id)>Click</td>
+            <td class="cell" id="inptToggl3" onclick=toggle(this.id)>Click</td>
+        </tr>
+    </table>
+    <br>
+    <div class="center" id="btnSendReactionDiv">
+        <input type="button" id="btnSendReaction" class="button" onclick=sendReaction()>
+    </div>
+ </form>
+<script>
+    let arrMonth=[];
+    let arrWeekDay=[];
+    let arrColor=[];
+    let arrReaction=[];
+    let arrAllReactions=[];
+    setLngIndex();
+    hideTable();
+    alert("vor Update in index")
+    update();
+    alert("nach Update in index")
+    main();
+</script>
+</body>
+</html>
