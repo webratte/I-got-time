@@ -8,12 +8,11 @@
             <script src='./js/main.js'></script>
             <script src='./js/languages.js'></script>
             <script src='./js/updates.js'></script>
-            <script src='./js/input.js'></script>
             <script src='./webxdc.js'></script>
             <style type='text/css'></style>
     </head>
     <font size='6'>I got time</font>
-    <font size='1'> by <a href="mailto:webratte+webxdc@mailbox.org">Webratte </a> Version 0.0.1 beta1
+    <font size='1'> by <a href="mailto:webratte+webxdc@mailbox.org">Webratte </a> Version 1.0 beta1
     </font>
 <body>
 <form>
@@ -24,8 +23,8 @@
     <div class="center" id="btnInputDiv">
         <input type="button" id="btnInput" class="button" onclick="location.assign('./input.html');">
     </div>
-    <div class="center" id="btnListDiv">
-        <input type="button" id="btnList" class="button" onclick="location.assign('./list.html');">
+    <div class="center" id="btnNewDiv">
+        <input type="button" id="btnNew" class="button" onclick="location.assign('./new.html');">
     </div>
     <div class="center" id="hintChoiceDiv">
         <output id="hintChoice"></output>
@@ -35,30 +34,49 @@
     </div>
     <table class="table" id="inputTable">
         <tr>
-            <td class="cell" id="inputCell1" onclick=toggle(this.id);>------</td>
+           <td class="cell" id="inputCell1" onclick=toggle(this.id);></td>
             <td class="cell" id="inputCell2" onclick=toggle(this.id)>------</td>
             <td class="cell" id="inputCell3" onclick=toggle(this.id)>------</td>
         </tr>
         <tr>
-            <td class="cell" id="inptToggl1" onclick=toggle(this.id)>Click</td>
-            <td class="cell" id="inptToggl2" onclick=toggle(this.id)>Click</td>
-            <td class="cell" id="inptToggl3" onclick=toggle(this.id)>Click</td>
+            <td class="cell" id="inptToggl1" onclick=toggle(this.id)></td>
+            <td class="cell" id="inptToggl2" onclick=toggle(this.id)>------</td>
+            <td class="cell" id="inptToggl3" onclick=toggle(this.id)>------</td>
         </tr>
     </table>
     <br>
     <div class="center" id="btnSendReactionDiv">
-        <input type="button" id="btnSendReaction" class="button" onclick=sendReaction()>
+        <input type="button" id="btnSendReaction" class="button" onclick=sendReaction();>
     </div>
- </form>
+<!-- table summary -->
+<div class="center" id="hintSummeryDiv">
+        <output id="hintSummery"></output>
+    </div>
+<table class="table" id="summaryTable" onclick="location.assign('./list.html');">
+    <tr>
+            <td class="cellThumb" id="summaryThumb1" >------</td>
+            <td class="cellThumb" id="summaryThumb4" >------</td>
+            <td class="cellThumb" id="summaryThumb7" >------</td>
+        </tr>
+        <tr>
+            <td class="cellGreen" id="summaryCell1" >------</td>
+            <td class="cellGreen" id="summaryCell4" >------</td>
+            <td class="cellGreen" id="summaryCell7" >------</td>
+        </tr>
+        <tr>
+            <td class="cellYellow" id="summaryCell2" >------</td>
+            <td class="cellYellow" id="summaryCell5" >------</td>
+            <td class="cellYellow" id="summaryCell8" >------</td>
+        </tr>
+        <tr>
+            <td class="cellRed" id="summaryCell3" >------</td>
+            <td class="cellRed" id="summaryCell6" >------</td>
+            <td class="cellRed" id="summaryCell9" >------</td>
+        </tr>
+    </table>
+</form>
 <script>
-    let arrMonth=[];
-    let arrWeekDay=[];
-    let arrColor=[];
-    let arrReaction=[];
-    let arrAllReactions=[];
-    setLngIndex();
-    hideTable();
-    update();
+    start();
 </script>
 </body>
 </html>

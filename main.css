@@ -30,22 +30,52 @@ body {
     border-radius: 5px;
 }
 
-.rotate {
-    transform: rotate(270deg);
-}
-
 .cell {
     width: 25%;
     border-style: solid;
     border-width: 2px;
     border-color: #ffffff;
+    vertical-align: middle;
+}
+
+.cellThumb {
+    width: 25%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+    vertical-align: middle;
+    font-size: 35px;
+}
+
+.cellGreen {
+    width: 25%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+    background: #afe35ff3;
+}
+
+.cellYellow {
+    width: 25%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+    background: #e3c44cf3;
+}
+
+.cellRed {
+    width: 25%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+    background: #ff7e40;
 }
 
 .input {
     width: 90%;
     margin-bottom: 3px;
-    contenteditable: true;
 }
+
 .inputTime {
     width: 44%;
     margin-left: 5px;
@@ -55,4 +85,17 @@ body {
 .error {
     text-align: center;
     color: #ff1554
+}
+
+.rotated-th {
+	height: 115px;	
+	position: relative;
+}
+
+.rotated-th__label {
+	bottom: -10px;
+	left: 50%;
+	position: absolute;
+	transform: rotate( -70deg );
+	transform-origin: center left;
 }

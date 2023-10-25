@@ -1,27 +1,60 @@
-function storeReactions(userExist) {
+function start() {
+    let arrMonth=[];
+    let arrWeekDay=[];
+    let arrColor=[];
+    let arrReaction=[];
+    let arrAllReactions=[];
+    startSerial=(localStorage.getItem("startSerial"));
+    if (startSerial==null) {
+        startSerial=1;
+    }
+    startSerial=parseInt(startSerial); currentHistory=localStorage.getItem("currentHistory");
+    if (currentHistory==null) {
+        currentHistory=0;
+    }
+    currentHistory=parseInt(currentHistory);
+    setLngIndex();
+    hideTable();
+    update();
+};
+
+function storeReactions() {
     arrAllReactions = JSON.parse(localStorage.getItem("arrAllReactions"));
     if (arrAllReactions==null) {
        arrAllReactions=[];
-   }
+    }
    //If selfAddress already exist delete it.
     for (i=0;i<arrAllReactions.length;i++) {
         if (arrReaction[1]==arrAllReactions[i]) {
-            arrAllReactions.splice(arrReaction[1], arrReaction.length-1);
+            arrAllReactions.splice(i-1, arrReaction.length);
         }
      }
-            for (i=1;i<arrReaction.length;i++) {
-                arrAllReactions.push(arrReaction[i]);
-                localStorage.setItem("arrAllReactions", JSON.stringify(arrAllReactions));
-                //clear arrReaction if its safed in arrAllReactions
-                arrReaction=[];
-    
+    if (arrReaction[3]!="empty") {
+        for (i=0;i<6;i++) {
+            arrAllReactions.push(arrReaction[i]);
+        }
     }
+    localStorage.setItem("arrAllReactions", JSON.stringify(arrAllReactions));
+//import own choice from received array to a arrReaction
+arrReaction=["empty", "empty", "empty","empty","empty","empty"];
+for (i=0;i<arrAllReactions.length;i=i+6) {
+    if (arrAllReactions[i+1]==webxdc.selfAddr) {
+        arrReaction[0]=arrHistory[0];
+        for (a=0;a<6;a++) {
+            arrReaction[a]=arrAllReactions[(i+a)];
+        }
+    }
+}
+if (arrAllReactions.length>0) {
+    showSummeryTable();
+}
 };
-
 function hideTable() {
     document.getElementById("inputTable").style.display = "none";
     document.getElementById("hintChoiceDiv").style.display = "none";
-    document.getElementById("btnListDiv").style.display = "none";
+    document.getElementById("summaryTable").style.display = "none";
+    document.getElementById("hintSummeryDiv").style.display = "none";
+    document.getElementById("btnNewDiv").style.display = "none";
     document.getElementById("btnSendReactionDiv").style.display = "none";
     document.getElementById("btnSendReaction").disabled = true;
 };
@@ -29,7 +62,7 @@ function hideTable() {
 function showTable () {
     document.getElementById("inputTable").style.display = "";
     document.getElementById("hintChoiceDiv").style.display = "";
-    document.getElementById("btnListDiv").style.display = ""; document.getElementById("btnInputDiv").style.display = "none";
+    document.getElementById("btnNewDiv").style.display = ""; document.getElementById("btnInputDiv").style.display = "none";
     document.getElementById("hintStartDiv").style.display = "none";
     document.getElementById("btnSendReactionDiv").style.display = "";
 };
@@ -39,25 +72,63 @@ function activateBtn() {
     document.getElementById("btnSendReaction").value=strBtnSend;
 };
 
+function showSummeryTable() {
+    document.getElementById("summaryTable").style.display = "";
+    document.getElementById("hintSummeryDiv").style.display = "";
+    calculateSummary();
+};
+
+function calculateSummary() {
+    let yes=0;
+    let no=0;
+    let maybe=0;
+    let cellID=0;
+    for (a=3;a<6;a++) {
+        if (arrAllReactions[a]=="empty") {return;}
+            for (i=a;i<arrAllReactions.length;i=i+6) {
+                if (arrAllReactions[i]==0) {yes=yes+1};
+                if (arrAllReactions[i]==2) {no=no+1};
+                if (arrAllReactions[i]==4) {maybe=maybe+1};
+
+            yesStr=((Math.round(100/(yes+no+maybe)*yes*10)/10).toString())+"%";
+            noStr=((Math.round(100/(yes+no+maybe)*no*10)/10).toString())+"%";
+            maybeStr=((Math.round(100/(yes+no+maybe)*maybe*10)/10).toString())+"%";
+            
+            document.getElementById("summaryCell"+(cellID+1).toString()).innerHTML=yesStr;
+            document.getElementById("summaryCell"+(cellID+2).toString()).innerHTML=maybeStr;
+            document.getElementById("summaryCell"+(cellID+3).toString()).innerHTML=noStr;
+        }
+        cellID=cellID+3;
+        yes=0;
+        no=0;
+        maybe=0;
+    }
+};
+
 function fillTable() {
     for (i=2;i<arrHistory.length;i=i+2) {
         dateShow=arrHistory[i];
-        tempDay=new Date(dateShow)
+        tempDay=new Date(dateShow);
         weekDayShow=arrWeekDay[tempDay.getDay()];
         timeShow=arrHistory[i+1];
         if (timeShow=="?") {
             timeShow="";
         }
         createDateStr();
-       document.getElementById("titleChoice").innerHTML=arrHistory [1]; fullDate=weekDayShow+"\n"+dateShow+"\n"+timeShow;
+        document.getElementById("titleChoice").innerHTML=arrHistory [1];
+        fullDate=weekDayShow+"\n"+dateShow+"\n"+timeShow;
         document.getElementById("inputCell"+(i/2)).innerHTML=fullDate;
+        document.getElementById("inptToggl"+(i/2)).innerHTML="Click";
     }
-    //set color of my own choice
-    if (arrReaction.length>0) {
-        for (i=3;i<arrReaction.length;i++) {
-        }
+    
+//set color of my own choice
+if (arrReaction[3]!="empty" && arrReaction[1]==webxdc.selfAddr) {
+    for (i=1;i<(arrHistory.length)/2;i++) {
+        answer=arrReaction[(i+2)];
+        document.getElementById("inptToggl"+i.toString()).innerHTML=arrColor[answer];
+        document.getElementById("inptToggl"+i.toString()).style.background=arrColor[answer+1];
     }
-    //TODO gespeichertes array auslesen und selfAddres vergleichen. Treffe ich meinen Eintrag, dann die Farbe setzen
+}
 };
 
 function createDateStr() {
@@ -71,9 +142,13 @@ function createDateStr() {
 function toggle(clickedID) {
 //0=Yes, 2=No, 4=???
     tempClickedID=parseInt(clickedID.substr(9 ,1));
+    //leave function if empty cell is clicked 
+    if (tempClickedID>(arrHistory.length-2)/2) {
+    return;
+}
     tempActivate=0;
-    answer=(localStorage.getItem("answer"+tempClickedID));
-    if (answer==null) {
+    answer=arrReaction[tempClickedID+2];
+    if (answer=="empty") {
         answer=parseInt(answer);
         answer=-2;
     }
@@ -84,18 +159,16 @@ function toggle(clickedID) {
         answer=answer+2;
         if (answer==6) {
             answer=0;
-        }
-        document.getElementById("inptToggl"+tempClickedID.toString()).innerHTML=arrColor[answer];
+        }    
+    arrReaction[tempClickedID+2]=answer; document.getElementById("inptToggl"+tempClickedID.toString()).innerHTML=arrColor[answer];
         document.getElementById("inptToggl"+tempClickedID.toString()).style.background=arrColor[answer+1];
-        localStorage.setItem("answer"+tempClickedID, answer);
-        
     }
     //Check if all dates are choosed and activate Send button
-    for (i=1;i<(arrHistory.length-1)/2;i++) {
-            if (localStorage.getItem("answer"+i)!=null) {
-                tempActivate=tempActivate+1
-            }
+    for (i=1;i<(arrHistory.length)/2;i++) {
+        if (arrReaction[i+2]!="empty") {
+            tempActivate=tempActivate+1;
         }
+    }
         if (tempActivate==(arrHistory.length-2)/2) {
            activateBtn();
         }

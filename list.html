@@ -7,12 +7,48 @@
             <link href='./main.css' rel="stylesheet">
             <script src='./js/main.js'></script>
             <script src='./js/languages.js'></script>
-            <script src='./js/updates.js'></script>
             <script src='./js/input.js'></script>
             <script src='./webxdc.js'></script>
+            <script src='./js/list.js'></script>
             <style type='text/css'></style>
     </head>
+    <font size='6'>I got time</font>
 <body>
-    
+    <form>
+        <table class="table" id="listTable">
+            <th>
+            	<div class="rotated-th">
+            	    <span class="rotated-th__label"></span>
+            	 </div>
+            </th>
+            <th>
+            	<div class="rotated-th">
+            	    <span class="rotated-th__label" id="listHeader1"></span>
+            	 </div>
+            </th>
+            <th>
+            	<div class="rotated-th">	
+            	    <span class="rotated-th__label" id="listHeader2"></span>
+            	</div>
+            </th>
+            <th>
+            	<div class="rotated-th">
+            	    <span class="rotated-th__label" id="listHeader3"></span>
+            	 </div>
+            </th>
+        </table>
+        <br>
+        <div id="btnBackDiv">
+            <input type="button" id="btnBack" class="button" onclick="location.assign('./index.html');">
+        </div>
+    </form>
+<script>
+    let arrMonth=[];
+    let arrWeekDay=[];
+    let arrColor=[];
+    setLngList();
+    fillListHeader();
+    extendTable();
+</script>
 </body>
 </html>

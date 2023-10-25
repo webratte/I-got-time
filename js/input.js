@@ -1,6 +1,6 @@
 function save() {
     CurrentTime = Date.now();
-    arrHistory=[CurrentTime]; //set Unix-Time as identifier
+    arrHistory=[CurrentTime];
     window.error=false;
     document.getElementById("errorMsgDiv").style.display="none";
     readValues ();
@@ -8,15 +8,15 @@ function save() {
         eraseValues ();
     }
     else {
-        //input is finished. Ready for send.
-        localStorage.setItem("newDate", "true");
-        arrReaction=[""];
+        //input is finished. Ready for send
+        arrReaction=["empty", "empty", "empty","empty","empty","empty"];
+        info = webxdc.selfName+" has posted a new appointment request: "+title;
         sendUpdate();
-        location.replace("./index.html");
+        location.assign("./index.html");
     }
 };
 
-function readValues () {
+function readValues() {
     title = document.getElementById("inputTitle").value;
     if (title == "") {
         window.tempID="inputTitle";
@@ -29,7 +29,6 @@ function readValues () {
     for (let i=1;i<4;i++) {
         date = document.getElementById("inputDate"+i.toString()).value;
         time = document.getElementById("inputTime"+i.toString()).value;
-        
         if (date!="") {
             dateSet=dateSet-1;
             storeValues ();
@@ -38,7 +37,6 @@ function readValues () {
             dateSet=dateSet-1;
             window.tempID="inputDate"+i.toString();
             setErrorColor ();
-            
         }
         else {
             window.tempID="inputDate"+i.toString();
@@ -48,11 +46,11 @@ function readValues () {
      }
      if (dateSet==3) {
             window.tempID="inputDate1";
-            setErrorColor ();        
+            setErrorColor ();
         }
 };
 
-function storeValues () {
+function storeValues() {
     if (time=="") {
         time="?";
     }
@@ -60,7 +58,7 @@ function storeValues () {
     time="";
 };
 
-function eraseValues () {
+function eraseValues() {
     localStorage.setItem("title", "");
     arrHistory=[];
 };
@@ -72,6 +70,6 @@ function setErrorColor () {
     document.getElementById(window.tempID).style.borderColor="#ff1554";
 };
 
-function revertRedBorder (tempID) {
+function revertRedBorder(tempID) {
     document.getElementById(tempID).style.borderColor="grey";
 };
