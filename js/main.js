@@ -196,6 +196,8 @@ function fillTable() {
         fullDate=weekDayShow+"\n"+dateShow+"\n"+timeShow;
         document.getElementById("inputCell"+(i/2)).innerHTML=fullDate;
         document.getElementById("inptToggl"+(i/2)).innerHTML="Click";
+        document.getElementById("inptToggl"+(i/2)).style.background="#e1e1e1";
+        document.getElementById("btnSendReaction").disabled = true;
     }
     
 //set color of my own choice
