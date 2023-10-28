@@ -4,6 +4,8 @@ function start() {
     let arrColor=[];
     let arrReaction=[];
     let arrAllReactions=[];
+    arrRating=[];
+    arrRatingVar=[];
     startSerial=(localStorage.getItem("startSerial"));
     if (startSerial==null) {
         startSerial=1;
@@ -62,7 +64,8 @@ function hideTable() {
 function showTable () {
     document.getElementById("inputTable").style.display = "";
     document.getElementById("hintChoiceDiv").style.display = "";
-    document.getElementById("btnNewDiv").style.display = ""; document.getElementById("btnInputDiv").style.display = "none";
+    document.getElementById("btnNewDiv").style.display = "";
+    document.getElementById("btnInputDiv").style.display = "none";
     document.getElementById("hintStartDiv").style.display = "none";
     document.getElementById("btnSendReactionDiv").style.display = "";
 };
@@ -83,25 +86,99 @@ function calculateSummary() {
     let no=0;
     let maybe=0;
     let cellID=0;
+    let thumbGreen="👍";
+    let thumbYellow="🤔";
+    let thumbRed="👎";
     for (a=3;a<6;a++) {
-        if (arrAllReactions[a]=="empty") {return;}
+        if (arrAllReactions[a]!="empty") {
             for (i=a;i<arrAllReactions.length;i=i+6) {
                 if (arrAllReactions[i]==0) {yes=yes+1};
                 if (arrAllReactions[i]==2) {no=no+1};
                 if (arrAllReactions[i]==4) {maybe=maybe+1};
-
-            yesStr=((Math.round(100/(yes+no+maybe)*yes*10)/10).toString())+"%";
-            noStr=((Math.round(100/(yes+no+maybe)*no*10)/10).toString())+"%";
-            maybeStr=((Math.round(100/(yes+no+maybe)*maybe*10)/10).toString())+"%";
-            
-            document.getElementById("summaryCell"+(cellID+1).toString()).innerHTML=yesStr;
-            document.getElementById("summaryCell"+(cellID+2).toString()).innerHTML=maybeStr;
-            document.getElementById("summaryCell"+(cellID+3).toString()).innerHTML=noStr;
+                window["rating"+i]=(yes*3)+(maybe);
+                arrRating[a-3]=(window["rating"+i]);
+                arrRatingVar[a-3]=("summaryThumb"+(a-2).toString());
+                yesStr=((Math.round(100/(yes+no+maybe)*yes*10)/10).toString())+"%";
+                noStr=((Math.round(100/(yes+no+maybe)*no*10)/10).toString())+"%";
+                maybeStr=((Math.round(100/(yes+no+maybe)*maybe*10)/10).toString())+"%";
+                document.getElementById("summaryCell"+(cellID+1).toString()).innerHTML=yesStr;
+                document.getElementById("summaryCell"+(cellID+2).toString()).innerHTML=maybeStr;
+                document.getElementById("summaryCell"+(cellID+3).toString()).innerHTML=noStr;
+            }
+            cellID=cellID+3;
+            yes=0;
+            no=0;
+            maybe=0;
         }
-        cellID=cellID+3;
-        yes=0;
-        no=0;
-        maybe=0;
+    }
+    sortEntries();
+    thumb1=thumbRed;
+    thumb2=thumbRed;
+    thumb3=thumbRed;
+    if (arrRating[0]>0) {
+        thumb1=thumbGreen;
+        setRating();
+        if (arrRating.length==2) {
+            if (arrRating[0]==arrRating[1]) {
+                thumb1=thumbGreen;
+                thumb2=thumbGreen;
+                setRating();
+            }
+            else {
+                thumb1=thumbGreen;
+                thumb2=thumbRed;
+                setRating();
+            }
+        }
+        if (arrRating.length==3) {
+            if (arrRating[0]==arrRating[1]) {
+            thumb2=thumbGreen;
+            setRating();
+            }
+        
+            if (arrRating[0]==arrRating[1] && arrRating[1]==arrRating[2]) {
+                thumb1=thumbGreen;
+                thumb2=thumbGreen;
+                thumb3=thumbGreen;
+                setRating();
+            }
+            if (arrRating[1]>arrRating[2] && arrRating[1]<arrRating[0]) {
+                thumb2=thumbYellow;
+                thumb3=thumbRed;
+                setRating();
+            }
+            if (arrRating[1]==0) {
+                thumb2=thumbRed;
+                thumb3=thumbRed;
+                setRating();
+            }
+        }
+   }   else {
+       setRating();
+    }
+};
+
+function sortEntries() {
+    sorted = false;
+        while (sorted == false) {
+            sorted = true;
+            for (i=0;i<arrRating.length;i++) {
+                if (arrRating[i]<arrRating[i+1]) {
+                    sorted = false;
+                    tempRating=arrRating[i+1];
+                    arrRating[i+1]=arrRating[i];
+                    arrRating[i]=tempRating;
+                    tempRatingVar=arrRatingVar[i+1];
+                    arrRatingVar[i+1]=arrRatingVar[i];
+                    arrRatingVar[i]=tempRatingVar;
+                }                    
+            }
+        }
+    }; 
+
+function setRating() {
+    for (i=0;i<arrRating.length;i++) {
+        document.getElementById(arrRatingVar[i]).innerHTML=window["thumb"+(i+1).toString()];
     }
 };
 
