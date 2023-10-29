@@ -1,6 +1,6 @@
 function save() {
     CurrentTime = Date.now();
-    arrHistory=[CurrentTime];
+    arrHistory=[webxdc.selfName];
     window.error=false;
     document.getElementById("errorMsgDiv").style.display="none";
     readValues ();
@@ -11,6 +11,7 @@ function save() {
         //input is finished. Ready for send
         arrReaction=["empty", "empty", "empty","empty","empty","empty"];
         info = webxdc.selfName+" has posted a new appointment request: "+title;
+        whoAsked = webxdc.selfName+" asked"
         sendUpdate();
         location.assign("./index.html");
     }
