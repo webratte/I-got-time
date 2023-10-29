@@ -1,10 +1,4 @@
 function update() {
-    resetApp=localStorage.getItem("resetApp");
-    if (resetApp=="true") {
-        localStorage.setItem("resetApp", "false");
-        return;
-    }
-
     let promise = window.webxdc.setUpdateListener((update) => {
         //value of arrHistory=Unix-Time as identifier, title, date, time, date...
         //value of arrReaction=Unix-Time of incominc arrHistory, selfAdress, selfName, codes for yes=0, no=2, ???=4
@@ -13,16 +7,10 @@ function update() {
         tmpStartSerial = update.serial;
         //store array to have it aviable in all pages
         localStorage.setItem("arrHistory", JSON.stringify(arrHistory));
-        currentHistory=localStorage.getItem("currentHistory");
-        if (currentHistory<parseInt(arrHistory[0])) {
-            newRequest();
-        }
-        else {
             storeReactions();
             fillTable();
             showTable();
-        }
-    }, startSerial-1);
+    }, );
 };
 
 function sendUpdate() {
@@ -43,13 +31,3 @@ function sendReaction() {
      sendUpdate();
 };
 
-function newRequest() {
-    arrAllReactions=[];
-    localStorage.setItem("currentHistory", arrHistory[0]);
-    localStorage.setItem("startSerial", tmpStartSerial);
-    arrAllReactions=[];
-    arrReaction=[];
-    localStorage.setItem("arrHistory", JSON.stringify(arrHistory));
-    localStorage.setItem("arrAllReactions", JSON.stringify(arrAllReactions));
-    location.assign('./alert.html');
-};

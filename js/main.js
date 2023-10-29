@@ -6,15 +6,6 @@ function start() {
     let arrAllReactions=[];
     arrRating=[];
     arrRatingVar=[];
-    startSerial=(localStorage.getItem("startSerial"));
-    if (startSerial==null) {
-        startSerial=1;
-    }
-    startSerial=parseInt(startSerial); currentHistory=localStorage.getItem("currentHistory");
-    if (currentHistory==null) {
-        currentHistory=0;
-    }
-    currentHistory=parseInt(currentHistory);
     setLngIndex();
     hideTable();
     update();
@@ -56,7 +47,7 @@ function hideTable() {
     document.getElementById("hintChoiceDiv").style.display = "none";
     document.getElementById("summaryTable").style.display = "none";
     document.getElementById("hintSummeryDiv").style.display = "none";
-    document.getElementById("btnNewDiv").style.display = "none";
+    document.getElementById("btnHelpDiv").style.display = "none";
     document.getElementById("btnSendReactionDiv").style.display = "none";
     document.getElementById("btnSendReaction").disabled = true;
 };
@@ -64,7 +55,7 @@ function hideTable() {
 function showTable () {
     document.getElementById("inputTable").style.display = "";
     document.getElementById("hintChoiceDiv").style.display = "";
-    document.getElementById("btnNewDiv").style.display = "";
+    document.getElementById("btnHelpDiv").style.display = "";
     document.getElementById("btnInputDiv").style.display = "none";
     document.getElementById("hintStartDiv").style.display = "none";
     document.getElementById("btnSendReactionDiv").style.display = "";
