@@ -56,7 +56,7 @@ function changeLanguage() {
                strBtnWasSent = "Update has been sent";
                strBtnCancel = "Cancel";
                strBtnInput = "Suggest new dates";
-               strBtnHelp = "Hilfe";
+               strBtnHelp = "Help";
                strBtnBack = "Back";
                strBtnOk = "Thanks for the tip";
                strHintInput = "Enter the suggested dates. Simply leave fields that are not required blank. The name of the appointment must be filled out.";
